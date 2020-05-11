@@ -11,6 +11,7 @@ namespace SE_TP2
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// teste
         [STAThread]
         static void Main()
         {
