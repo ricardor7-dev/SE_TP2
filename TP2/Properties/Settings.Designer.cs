@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SE_TP2.Properties
+namespace TP2.Properties
 {
 
 

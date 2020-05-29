@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F9C94DA8-1539-4558-95F0-0E9A52A7332A}</ProjectGuid>
+    <ProjectGuid>{6A9DA7F3-0A0A-4EFD-A66E-E368A5B23AB7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SE_TP2</RootNamespace>
-    <AssemblyName>SE_TP2</AssemblyName>
+    <RootNamespace>TP2</RootNamespace>
+    <AssemblyName>TP2</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
