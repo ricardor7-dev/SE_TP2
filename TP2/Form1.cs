@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO.Ports;
 using System.Windows.Forms;
+using System.Xml;
 using Syroot.Windows.IO;
 
 namespace TP2
 {
     public partial class Form1 : Form
     {
-        private string _rxString;
         private string _data;
 
         public Form1()
@@ -110,21 +110,31 @@ namespace TP2
             {
                 serialPort1.Write(textBoxEnviar.Text);
             }
+
             this.Invoke(new EventHandler(serialPort1_DataReceived));
         }
 
         private void serialPort1_DataReceived(object sender, EventArgs e)
         {
-            _rxString = serialPort1.ReadExisting();
-            _data = DateTime.Now + " " + ":" + " " + _rxString;
-            textBoxReceber.AppendText(_data);
+            _data = serialPort1.ReadExisting();
+            var output = DateTime.Now + " " + ":" + " " + _data;
+            textBoxReceber.AppendText(output);
 
-            this.Invoke(new EventHandler(trataDadoRecebido));
         }
 
-        private void trataDadoRecebido(object sender, EventArgs e)
+        private void WriteMenu(object sender, EventArgs e)
         {
-            textBoxReceber.AppendText(_data);
+            _data = serialPort1.ReadExisting();
+
+            if (string.IsNullOrEmpty(_data) == true)
+            {
+                textBoxReceber.AppendText("Vazio");
+            }
+            else
+            {
+                var output = DateTime.Now + " " + ":" + " " + _data;
+                textBoxReceber.AppendText(output);
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -141,13 +151,6 @@ namespace TP2
                 MessageBox.Show(exception.Message, "Error");
                 throw;
             }
-        }
-
-        private void WriteMenu(object sender, EventArgs e)
-        {
-            var data = serialPort1.ReadExisting();
-            data = DateTime.Now + " " + ":" + " " + data;
-            textBoxReceber.AppendText(data);
         }
     }
 }
