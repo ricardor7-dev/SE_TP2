@@ -38,6 +38,8 @@
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.saveButton = new System.Windows.Forms.Button();
             this.BtLigar = new System.Windows.Forms.Button();
+            this.eventLog1 = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             this.SuspendLayout();
             // 
             // ButtonConnect
@@ -111,6 +113,10 @@
             this.BtLigar.UseVisualStyleBackColor = true;
             this.BtLigar.Click += new System.EventHandler(this.BtLigar_Click);
             // 
+            // eventLog1
+            // 
+            this.eventLog1.SynchronizingObject = this;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -125,6 +131,8 @@
             this.Controls.Add(this.ButtonConnect);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,6 +149,7 @@
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button BtLigar;
+        private System.Diagnostics.EventLog eventLog1;
     }
 }
 

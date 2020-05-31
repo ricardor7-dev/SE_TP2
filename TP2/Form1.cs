@@ -122,11 +122,15 @@ namespace TP2
             {
                 while (serialPort1.ReadByte() != -1)
                 {
+                    //var z = serialPort1.ReadByte();
+
                     _data = serialPort1.ReadLine();
 
                     //corre na ui thread
                     BeginInvoke(new MethodInvoker(delegate
                     {
+                        //char c = (char) z;
+                        //textBoxReceber.AppendText(c.ToString());
                         textBoxReceber.AppendText(_data);
                         textBoxReceber.AppendText(Environment.NewLine);
                     }));
@@ -138,30 +142,6 @@ namespace TP2
                 throw;
             }
         }
-
-        private void DoMoreWork()
-        {
-            BeginInvoke(new MethodInvoker(delegate
-            {
-                var output = DateTime.Now + ":";
-                textBoxReceber.AppendText(output);
-                textBoxReceber.AppendText(Environment.NewLine);
-                serialPort1.Write("0");
-            }));
-
-            while (serialPort1.ReadByte() != -1)
-            {
-                _data = serialPort1.ReadLine();
-
-                //corre na ui thread
-                BeginInvoke(new MethodInvoker(delegate
-                {
-                    textBoxReceber.AppendText(_data);
-                    textBoxReceber.AppendText(Environment.NewLine);
-                }));
-            }
-        }
-
 
         private void saveButton_Click(object sender, EventArgs e)
         {
@@ -179,13 +159,17 @@ namespace TP2
             }
         }
 
-        //resolver
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (serialPort1.IsOpen == true)
+            if (serialPort1.IsOpen)
             {
                 serialPort1.Close();
             }
+
+            var messageBoxCS = new System.Text.StringBuilder();
+            messageBoxCS.AppendFormat("{0} = {1}", "CloseReason", e.CloseReason);
+            messageBoxCS.AppendLine();
+            MessageBox.Show(messageBoxCS.ToString(), "FormClosing Event");
         }
     }
 }
