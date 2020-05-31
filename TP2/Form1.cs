@@ -122,15 +122,11 @@ namespace TP2
             {
                 while (serialPort1.ReadByte() != -1)
                 {
-                    //var z = serialPort1.ReadByte();
-
                     _data = serialPort1.ReadLine();
 
                     //corre na ui thread
                     BeginInvoke(new MethodInvoker(delegate
                     {
-                        //char c = (char) z;
-                        //textBoxReceber.AppendText(c.ToString());
                         textBoxReceber.AppendText(_data);
                         textBoxReceber.AppendText(Environment.NewLine);
                     }));
