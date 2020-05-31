@@ -1,8 +1,11 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using Syroot.Windows.IO;
+using Timer = System.Windows.Forms.Timer;
 
 namespace TP2
 {
@@ -124,11 +127,18 @@ namespace TP2
 
         private void WriteMenu(object sender, EventArgs e)
         {
+            Timer timer = new Timer(null, null, 2000, 0);
+
+            if (serialPort1.IsOpen)
+            {
+                serialPort1.Write("a");
+            }
+
             _data = serialPort1.ReadExisting();
 
-            if (string.IsNullOrEmpty(_data) == true)
+            if (string.IsNullOrEmpty(_data))
             {
-                textBoxReceber.AppendText("Vazio");
+                textBoxReceber.AppendText("No data received from arduino!");
             }
             else
             {
