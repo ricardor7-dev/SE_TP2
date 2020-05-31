@@ -37,6 +37,7 @@
             this.TimerCOM = new System.Windows.Forms.Timer(this.components);
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.saveButton = new System.Windows.Forms.Button();
+            this.BtLigar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ButtonConnect
@@ -59,7 +60,7 @@
             // 
             // btEnviar
             // 
-            this.btEnviar.Location = new System.Drawing.Point(12, 85);
+            this.btEnviar.Location = new System.Drawing.Point(12, 130);
             this.btEnviar.Name = "btEnviar";
             this.btEnviar.Size = new System.Drawing.Size(138, 21);
             this.btEnviar.TabIndex = 2;
@@ -69,7 +70,7 @@
             // 
             // textBoxEnviar
             // 
-            this.textBoxEnviar.Location = new System.Drawing.Point(156, 85);
+            this.textBoxEnviar.Location = new System.Drawing.Point(156, 130);
             this.textBoxEnviar.Name = "textBoxEnviar";
             this.textBoxEnviar.Size = new System.Drawing.Size(136, 20);
             this.textBoxEnviar.TabIndex = 3;
@@ -78,11 +79,11 @@
             // 
             this.textBoxReceber.AcceptsReturn = true;
             this.textBoxReceber.AcceptsTab = true;
-            this.textBoxReceber.Location = new System.Drawing.Point(12, 136);
+            this.textBoxReceber.Location = new System.Drawing.Point(12, 173);
             this.textBoxReceber.Multiline = true;
             this.textBoxReceber.Name = "textBoxReceber";
             this.textBoxReceber.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxReceber.Size = new System.Drawing.Size(776, 302);
+            this.textBoxReceber.Size = new System.Drawing.Size(776, 265);
             this.textBoxReceber.TabIndex = 4;
             // 
             // TimerCOM
@@ -100,11 +101,22 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // BtLigar
+            // 
+            this.BtLigar.Location = new System.Drawing.Point(12, 85);
+            this.BtLigar.Name = "BtLigar";
+            this.BtLigar.Size = new System.Drawing.Size(138, 21);
+            this.BtLigar.TabIndex = 6;
+            this.BtLigar.Text = "Ligar";
+            this.BtLigar.UseVisualStyleBackColor = true;
+            this.BtLigar.Click += new System.EventHandler(this.BtLigar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BtLigar);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.textBoxReceber);
             this.Controls.Add(this.textBoxEnviar);
@@ -128,6 +140,7 @@
         private System.Windows.Forms.Timer TimerCOM;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button BtLigar;
     }
 }
 

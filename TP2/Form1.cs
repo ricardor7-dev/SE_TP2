@@ -1,11 +1,8 @@
 ﻿using System;
 using System.IO.Ports;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 using Syroot.Windows.IO;
-using Timer = System.Windows.Forms.Timer;
 
 namespace TP2
 {
@@ -78,9 +75,6 @@ namespace TP2
 
                 ButtonConnect.Text = "Desconectar";
                 comboBox1.Enabled = false;
-
-                //Escrever o menu
-                this.Invoke(new EventHandler(WriteMenu));
             }
             else
             {
@@ -98,54 +92,76 @@ namespace TP2
             }
         }
 
-        //resolver
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (serialPort1.IsOpen == true)
-            {
-                serialPort1.Close();
-            }
-        }
-
         private void btEnviar_Click(object sender, EventArgs e)
         {
-            if (serialPort1.IsOpen == true)
+            if (serialPort1.IsOpen)
             {
                 serialPort1.Write(textBoxEnviar.Text);
             }
-
-            this.Invoke(new EventHandler(serialPort1_DataReceived));
         }
 
-        private void serialPort1_DataReceived(object sender, EventArgs e)
+        private void BtLigar_Click(object sender, EventArgs e)
         {
-            _data = serialPort1.ReadExisting();
-            var output = DateTime.Now + " " + ":" + " " + _data;
-            textBoxReceber.AppendText(output);
+            if (!serialPort1.IsOpen) return;
 
+            var thread = new Thread(new ThreadStart(DoWork));
+            thread.Start();
         }
 
-        private void WriteMenu(object sender, EventArgs e)
+        private void DoWork()
         {
-            Timer timer = new Timer(null, null, 2000, 0);
-
-            if (serialPort1.IsOpen)
+            BeginInvoke(new MethodInvoker(delegate
             {
-                serialPort1.Write("a");
-            }
-
-            _data = serialPort1.ReadExisting();
-
-            if (string.IsNullOrEmpty(_data))
-            {
-                textBoxReceber.AppendText("No data received from arduino!");
-            }
-            else
-            {
-                var output = DateTime.Now + " " + ":" + " " + _data;
+                var output = DateTime.Now + ":";
                 textBoxReceber.AppendText(output);
+                textBoxReceber.AppendText(Environment.NewLine);
+                serialPort1.Write("0");
+            }));
+
+            try
+            {
+                while (serialPort1.ReadByte() != -1)
+                {
+                    _data = serialPort1.ReadLine();
+
+                    //corre na ui thread
+                    BeginInvoke(new MethodInvoker(delegate
+                    {
+                        textBoxReceber.AppendText(_data);
+                        textBoxReceber.AppendText(Environment.NewLine);
+                    }));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
+
+        private void DoMoreWork()
+        {
+            BeginInvoke(new MethodInvoker(delegate
+            {
+                var output = DateTime.Now + ":";
+                textBoxReceber.AppendText(output);
+                textBoxReceber.AppendText(Environment.NewLine);
+                serialPort1.Write("0");
+            }));
+
+            while (serialPort1.ReadByte() != -1)
+            {
+                _data = serialPort1.ReadLine();
+
+                //corre na ui thread
+                BeginInvoke(new MethodInvoker(delegate
+                {
+                    textBoxReceber.AppendText(_data);
+                    textBoxReceber.AppendText(Environment.NewLine);
+                }));
+            }
+        }
+
 
         private void saveButton_Click(object sender, EventArgs e)
         {
@@ -160,6 +176,15 @@ namespace TP2
             {
                 MessageBox.Show(exception.Message, "Error");
                 throw;
+            }
+        }
+
+        //resolver
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (serialPort1.IsOpen == true)
+            {
+                serialPort1.Close();
             }
         }
     }
